@@ -14,9 +14,7 @@ after_success:
   - docker build -t aronp/multi-server ./server
   - docker build -t aronp/multi-worker ./worker 
 
-  # log into docker CLI 
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-  # take those images and push them to docker hub 
   - docker push aronp/multi-client
   - docker push aronp/multi-nginx
   - docker push aronp/multi-server

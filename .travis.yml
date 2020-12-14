@@ -1,0 +1,23 @@
+sudo: required
+services 
+  - docker
+
+before_install:
+  - docker build -t aronp/multicontainer-docker -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true aronp/multicontainer-docker npm test
+
+after_success: 
+  - docker build -t aronp/multi-client ./client
+  - docker build -t aronp/multi-nginx ./nginx
+  - docker build -t aronp/multi-server ./server
+  - docker build -t aronp/multi-worker ./worker 
+
+  # log into docker CLI 
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # take those images and push them to docker hub 
+  - docker push aronp/multi-client
+  - docker push aronp/multi-nginx
+  - docker push aronp/multi-server
+  - docker push aronp/multi-worker

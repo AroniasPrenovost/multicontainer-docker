@@ -28,6 +28,6 @@
       "image": "aronp/multi-worker",
       "hostname": "worker",
       "essential": false
-    },
+    }
   ]
 }

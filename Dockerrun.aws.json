@@ -1,0 +1,33 @@
+{
+  "AWSEBDockerrunVersion": 2,
+  "containerDefinitions": [
+    {
+      "name": "client",
+      "image": "aronp/multi-client",
+      "hostname": "client",
+      "essential": false
+    },
+    {
+      "name": "nginx",
+      "image": "aronp/multi-nginx",
+      "essential": true,
+      "portMappings": [{
+        "hostPort": 80,
+        "containerPort": 80
+      }],
+      "links": ["client", "server"]
+    },
+    {
+      "name": "server",
+      "image": "aronp/multi-server",
+      "hostname": "api", 
+      "essential": false
+    },    
+    {
+      "name": "worker",
+      "image": "aronp/multi-worker",
+      "hostname": "worker",
+      "essential": false
+    },
+  ]
+}
